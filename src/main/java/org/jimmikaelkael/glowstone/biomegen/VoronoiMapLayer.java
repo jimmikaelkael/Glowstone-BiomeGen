@@ -16,7 +16,7 @@ public class VoronoiMapLayer extends MapLayer {
         int[] values = new int[sizeX * sizeZ]; 
         for (int i = 0; i < sizeZ; i++) {
             for (int j = 0; j < sizeX; j++) {
-                values[j + i * sizeX] = Math.abs((int) ((voronoi.noise(x + j, z + i) + 1 / 2) * Biome.count()));
+               // values[j + i * sizeX] = Math.abs((int) ((voronoi.noise(x + j, z + i) + 1 / 2) * GlowBiome.count()));
             }
         }
         return values;

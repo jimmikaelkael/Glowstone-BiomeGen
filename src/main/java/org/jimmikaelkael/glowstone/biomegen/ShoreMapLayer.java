@@ -1,12 +1,16 @@
 package org.jimmikaelkael.glowstone.biomegen;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.bukkit.block.Biome;
 
-public class DeepOceanMapLayer extends MapLayer {
+public class ShoreMapLayer extends MapLayer {
 
+    private static final Set<Integer> OCEANS = new HashSet<Integer>();
     private final MapLayer belowLayer;
 
-    public DeepOceanMapLayer(long seed, MapLayer belowLayer) {
+    public ShoreMapLayer(long seed, MapLayer belowLayer) {
         super(seed);
         this.belowLayer = belowLayer;
     }
@@ -28,21 +32,27 @@ public class DeepOceanMapLayer extends MapLayer {
                 // XxX
                 // 0X0
                 // the grid center value decides how we are proceeding:
-                // - if it's ocean and it's surrounded by 4 ocean cells there is 19/20 chances
-                // it turns the center value into deep ocean and 1/20 chance it stay ocean.
+                // - if it's not ocean and it's surrounded by at least 1 ocean cell
+                // it turns the center value into beach.
                 int upperVal = values[j + 1 + i * gridSizeX];
                 int lowerVal = values[j + 1 + (i + 2) * gridSizeX];
                 int leftVal = values[j + (i + 1) * gridSizeX];
                 int rightVal = values[j + 2 + (i + 1) * gridSizeX];
                 int centerVal = values[j + 1 + (i + 1) * gridSizeX];
                 setCoordsSeed(x + j, z + i);
-                if (centerVal == 0 && upperVal == 0 && lowerVal == 0 && leftVal == 0 && rightVal == 0) {
-                    finalValues[j + i * sizeX] = nextInt(20) == 0 ? 0 : GlowBiome.getId(Biome.DEEP_OCEAN);
+                if (!OCEANS.contains(centerVal) && (OCEANS.contains(upperVal) || OCEANS.contains(lowerVal) ||
+                        OCEANS.contains(leftVal) || OCEANS.contains(rightVal))) {
+                    finalValues[j + i * sizeX] = GlowBiome.getId(Biome.BEACH);
                 } else {
                     finalValues[j + i * sizeX] = centerVal;
                 }
             }
         }
         return finalValues;
+    }
+
+    static {
+        OCEANS.add(GlowBiome.getId(Biome.OCEAN));
+        OCEANS.add(GlowBiome.getId(Biome.DEEP_OCEAN));
     }
 }

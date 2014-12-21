@@ -31,9 +31,12 @@ public class Main extends JComponent {
         layer = new ErosionMapLayer(seed + 3, layer);
         layer = new ZoomMapLayer(seed + 4, layer);
         layer = new ErosionMapLayer(seed + 5, layer);
+        //
         layer = new DeepOceanMapLayer(seed + 5, layer);
-        for (int k = 0; k < 3; k++) {
-          layer = new ZoomMapLayer(seed + 7 + k, layer);
+        layer = new ZoomMapLayer(seed + 6, layer);
+        layer = new ShoreMapLayer(seed + 7, layer);
+        for (int i = 0; i < 2; i++) {
+          layer = new ZoomMapLayer(seed + 10 + i, layer);
         }
 
         int[] data = new int[WIDTH * HEIGHT];
@@ -45,7 +48,7 @@ public class Main extends JComponent {
                 for (int x = 0; x < CHUNK_SIZE; x++) {
                     for (int z = 0; z < CHUNK_SIZE; z++) {
                         data[x + (CHUNK_SIZE * i) + (j * CHUNK_SIZE * CHUNK_WIDTH * CHUNK_SIZE)
-                                + (z * CHUNK_SIZE * CHUNK_WIDTH)] = Biome.colorFromIndex(ints[z * CHUNK_SIZE + x]);
+                                + (z * CHUNK_SIZE * CHUNK_WIDTH)] = GlowBiome.getColor(ints[z * CHUNK_SIZE + x]);
                     }
                 }
             }
