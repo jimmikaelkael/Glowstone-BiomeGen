@@ -1,6 +1,8 @@
 package org.jimmikaelkael.glowstone.biomegen;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.bukkit.block.Biome;
@@ -8,6 +10,7 @@ import org.bukkit.block.Biome;
 public class ShoreMapLayer extends MapLayer {
 
     private static final Set<Integer> OCEANS = new HashSet<Integer>();
+    private static final Map<Integer, Integer> SPECIAL_SHORES = new HashMap<Integer, Integer>();
     private final MapLayer belowLayer;
 
     public ShoreMapLayer(long seed, MapLayer belowLayer) {
@@ -42,7 +45,8 @@ public class ShoreMapLayer extends MapLayer {
                 setCoordsSeed(x + j, z + i);
                 if (!OCEANS.contains(centerVal) && (OCEANS.contains(upperVal) || OCEANS.contains(lowerVal) ||
                         OCEANS.contains(leftVal) || OCEANS.contains(rightVal))) {
-                    finalValues[j + i * sizeX] = GlowBiome.getId(Biome.BEACH);
+                    finalValues[j + i * sizeX] =
+                            SPECIAL_SHORES.containsKey(centerVal) ? SPECIAL_SHORES.get(centerVal) : GlowBiome.getId(Biome.BEACH);
                 } else {
                     finalValues[j + i * sizeX] = centerVal;
                 }
@@ -54,5 +58,8 @@ public class ShoreMapLayer extends MapLayer {
     static {
         OCEANS.add(GlowBiome.getId(Biome.OCEAN));
         OCEANS.add(GlowBiome.getId(Biome.DEEP_OCEAN));
+
+        SPECIAL_SHORES.put(GlowBiome.getId(Biome.EXTREME_HILLS), GlowBiome.getId(Biome.STONE_BEACH));
+        SPECIAL_SHORES.put(GlowBiome.getId(Biome.ICE_PLAINS), GlowBiome.getId(Biome.COLD_BEACH));
     }
 }

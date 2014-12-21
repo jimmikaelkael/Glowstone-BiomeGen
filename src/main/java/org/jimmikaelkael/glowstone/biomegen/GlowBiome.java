@@ -35,8 +35,11 @@ public class GlowBiome {
         set(4, FOREST, makeColor(5, 102, 33));
         set(5, TAIGA, makeColor(11, 102, 89));
         set(6, SWAMPLAND, makeColor(7, 249, 178));
+        set(12, ICE_PLAINS, makeColor(255, 255, 255));
         set(16, BEACH, makeColor(250, 222, 85));
         set(24, DEEP_OCEAN, makeColor(0, 0, 48));
+        set(25, STONE_BEACH, makeColor(162, 162, 132));
+        set(26, COLD_BEACH, makeColor(250, 240, 192));
     }
 
     private static int makeColor(int r, int g, int b) {
