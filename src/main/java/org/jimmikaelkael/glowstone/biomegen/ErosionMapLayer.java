@@ -41,6 +41,24 @@ public class ErosionMapLayer extends MapLayer {
                     finalValues[j + i * sizeX] = nextInt(5) == 0 ? 0 : centerVal;
                 } else if (centerVal == 0 && (upperLeftVal != 0 || upperRightVal != 0 || lowerLeftVal != 0 || lowerRightVal != 0)) {
                     finalValues[j + i * sizeX] = nextInt(3) == 0 ? 1 : 0;
+                    // below can be uncommented if we want to allow some uncontinental biomes
+                    // to spread more on islands.
+                    /*
+                    if (nextInt(3) == 0) {
+                        int val = lowerRightVal;
+                        int n = nextInt(4);
+                        if (n == 0) {
+                            val = upperLeftVal;
+                        } else if (n == 1) {
+                            val = lowerLeftVal;
+                        } else if (n == 2) {
+                            val = upperRightVal;
+                        }
+                        finalValues[j + i * sizeX] = val;
+                    } else {
+                        finalValues[j + i * sizeX] = 0;
+                    }
+                    */
                 } else {
                     finalValues[j + i * sizeX] = centerVal;
                 }

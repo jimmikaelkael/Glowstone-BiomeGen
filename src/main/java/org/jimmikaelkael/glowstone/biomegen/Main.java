@@ -15,8 +15,8 @@ public class Main extends JComponent {
 
     private static final long serialVersionUID = 4128619461630366918L;
     private static final int CHUNK_SIZE = 16;
-    private static final int CHUNK_WIDTH = 100;
-    private static final int CHUNK_HEIGHT = 55;
+    private static final int CHUNK_WIDTH = 110;
+    private static final int CHUNK_HEIGHT = 60;
     private static final int WIDTH = CHUNK_SIZE * CHUNK_WIDTH;
     private static final int HEIGHT = CHUNK_SIZE * CHUNK_HEIGHT;
     private static long seed;   
@@ -26,17 +26,22 @@ public class Main extends JComponent {
         //seed = 123;
         MapLayer layer = new NoiseMapLayer(seed); // this is initial land spread layer
         for (int i = 0; i < 2; i++) {
-            layer = new ZoomMapLayer(seed + 1 + i, layer, ZoomType.BLURRY);
+            layer = new ZoomMapLayer(seed + 100 + i, layer, ZoomType.BLURRY);
         }
+        layer = new BiomeMapLayer(seed + 1, layer);
+        layer = new ZoomMapLayer(seed + 2, layer);
         layer = new ErosionMapLayer(seed + 3, layer);
         layer = new ZoomMapLayer(seed + 4, layer);
         layer = new ErosionMapLayer(seed + 5, layer);
-        layer = new DeepOceanMapLayer(seed + 5, layer);
-        layer = new ZoomMapLayer(seed + 6, layer);
+        layer = new DeepOceanMapLayer(seed + 6, layer);
+        for (int i = 0; i < 2; i++) {
+            layer = new ZoomMapLayer(seed + 200 + i, layer);
+        }
         layer = new ShoreMapLayer(seed + 7, layer);
         for (int i = 0; i < 2; i++) {
-            layer = new ZoomMapLayer(seed + 10 + i, layer);
+            layer = new ZoomMapLayer(seed + 300 + i, layer);
         }
+        layer = new SmoothMapLayer(seed + 8, layer);
 
         int[] data = new int[WIDTH * HEIGHT];
         //Random random = new Random();
