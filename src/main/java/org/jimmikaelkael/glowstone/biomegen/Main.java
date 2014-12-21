@@ -30,10 +30,11 @@ public class Main extends JComponent {
         }
         layer = new ErosionMapLayer(seed + 3, layer);
         layer = new ZoomMapLayer(seed + 4, layer);
-        layer = new ErosionMapLayer(seed + 5, layer);       
+        layer = new ErosionMapLayer(seed + 5, layer);
+        layer = new DeepOceanMapLayer(seed + 5, layer);
         for (int k = 0; k < 3; k++) {
-          layer = new ZoomMapLayer(seed + 6 + k, layer);
-        }      
+          layer = new ZoomMapLayer(seed + 7 + k, layer);
+        }
 
         int[] data = new int[WIDTH * HEIGHT];
         //Random random = new Random();

@@ -20,7 +20,7 @@ public class ErosionMapLayer extends MapLayer {
         int[] finalValues = new int[sizeX * sizeZ];
         for (int i = 0; i < sizeZ; i++) {
             for (int j = 0; j < sizeX; j++) {
-                // This applies erosion using rotated Von Neumann neighborhood
+                // This applies erosion using Rotated Von Neumann neighborhood
                 // it takes a 3x3 grid with a cross shape and analyzes values as follow
                 // X0X
                 // 0X0
