@@ -31,12 +31,11 @@ public class Main extends JComponent {
         layer = new ErosionMapLayer(seed + 3, layer);
         layer = new ZoomMapLayer(seed + 4, layer);
         layer = new ErosionMapLayer(seed + 5, layer);
-        //
         layer = new DeepOceanMapLayer(seed + 5, layer);
         layer = new ZoomMapLayer(seed + 6, layer);
         layer = new ShoreMapLayer(seed + 7, layer);
         for (int i = 0; i < 2; i++) {
-          layer = new ZoomMapLayer(seed + 10 + i, layer);
+            layer = new ZoomMapLayer(seed + 10 + i, layer);
         }
 
         int[] data = new int[WIDTH * HEIGHT];

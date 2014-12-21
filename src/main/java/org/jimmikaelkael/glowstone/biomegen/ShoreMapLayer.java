@@ -58,8 +58,10 @@ public class ShoreMapLayer extends MapLayer {
     static {
         OCEANS.add(GlowBiome.getId(Biome.OCEAN));
         OCEANS.add(GlowBiome.getId(Biome.DEEP_OCEAN));
+        OCEANS.add(GlowBiome.getId(Biome.FROZEN_OCEAN));
 
         SPECIAL_SHORES.put(GlowBiome.getId(Biome.EXTREME_HILLS), GlowBiome.getId(Biome.STONE_BEACH));
         SPECIAL_SHORES.put(GlowBiome.getId(Biome.ICE_PLAINS), GlowBiome.getId(Biome.COLD_BEACH));
+        SPECIAL_SHORES.put(GlowBiome.getId(Biome.MUSHROOM_ISLAND), GlowBiome.getId(Biome.MUSHROOM_SHORE));
     }
 }

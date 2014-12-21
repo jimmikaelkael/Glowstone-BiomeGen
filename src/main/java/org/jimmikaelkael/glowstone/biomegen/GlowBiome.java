@@ -35,7 +35,10 @@ public class GlowBiome {
         set(4, FOREST, makeColor(5, 102, 33));
         set(5, TAIGA, makeColor(11, 102, 89));
         set(6, SWAMPLAND, makeColor(7, 249, 178));
+        set(10, FROZEN_OCEAN, makeColor(144, 144, 160));
         set(12, ICE_PLAINS, makeColor(255, 255, 255));
+        set(14, MUSHROOM_ISLAND, makeColor(255, 0, 255));
+        set(15, MUSHROOM_SHORE, makeColor(160, 0, 255));
         set(16, BEACH, makeColor(250, 222, 85));
         set(24, DEEP_OCEAN, makeColor(0, 0, 48));
         set(25, STONE_BEACH, makeColor(162, 162, 132));
