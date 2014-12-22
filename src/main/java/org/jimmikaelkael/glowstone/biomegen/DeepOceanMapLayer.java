@@ -28,16 +28,19 @@ public class DeepOceanMapLayer extends MapLayer {
                 // XxX
                 // 0X0
                 // the grid center value decides how we are proceeding:
-                // - if it's ocean and it's surrounded by 4 ocean cells there is 7/8 chances
-                // it turns the center value into deep ocean and 1/8 chance it stay ocean.
-                int upperVal = values[j + 1 + i * gridSizeX];
-                int lowerVal = values[j + 1 + (i + 2) * gridSizeX];
-                int leftVal = values[j + (i + 1) * gridSizeX];
-                int rightVal = values[j + 2 + (i + 1) * gridSizeX];
+                // - if it's ocean and it's surrounded by 4 ocean cells we spread deep ocean.
                 int centerVal = values[j + 1 + (i + 1) * gridSizeX];
-                setCoordsSeed(x + j, z + i);
-                if (centerVal == 0 && upperVal == 0 && lowerVal == 0 && leftVal == 0 && rightVal == 0) {
-                    finalValues[j + i * sizeX] = nextInt(10) == 0 ? 0 : GlowBiome.getId(Biome.DEEP_OCEAN);
+                if (centerVal == 0) {
+                    int upperVal = values[j + 1 + i * gridSizeX];
+                    int lowerVal = values[j + 1 + (i + 2) * gridSizeX];
+                    int leftVal = values[j + (i + 1) * gridSizeX];
+                    int rightVal = values[j + 2 + (i + 1) * gridSizeX];
+                    if (upperVal == 0 && lowerVal == 0 && leftVal == 0 && rightVal == 0) {
+                        setCoordsSeed(x + j, z + i);
+                        finalValues[j + i * sizeX] = nextInt(100) == 0 ? GlowBiome.getId(Biome.MUSHROOM_ISLAND) : GlowBiome.getId(Biome.DEEP_OCEAN);
+                    } else {
+                        finalValues[j + i * sizeX] = centerVal;
+                    }
                 } else {
                     finalValues[j + i * sizeX] = centerVal;
                 }

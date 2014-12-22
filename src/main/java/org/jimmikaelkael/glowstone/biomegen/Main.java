@@ -9,6 +9,7 @@ import java.util.Random;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 
+import org.jimmikaelkael.glowstone.biomegen.WhittakerMapLayer.ClimateType;
 import org.jimmikaelkael.glowstone.biomegen.ZoomMapLayer.ZoomType;
 
 public class Main extends JComponent {
@@ -25,23 +26,27 @@ public class Main extends JComponent {
     public void initialize() {
         //seed = 123;
         MapLayer layer = new NoiseMapLayer(seed); // this is initial land spread layer
+        layer = new WhittakerMapLayer(seed + 1, layer, ClimateType.WARM_WET);
+        layer = new WhittakerMapLayer(seed + 2, layer, ClimateType.COLD_DRY);
         for (int i = 0; i < 2; i++) {
             layer = new ZoomMapLayer(seed + 100 + i, layer, ZoomType.BLURRY);
         }
-        layer = new BiomeMapLayer(seed + 1, layer);
-        layer = new ZoomMapLayer(seed + 2, layer);
-        layer = new ErosionMapLayer(seed + 3, layer);
-        layer = new ZoomMapLayer(seed + 4, layer);
-        layer = new ErosionMapLayer(seed + 5, layer);
-        layer = new DeepOceanMapLayer(seed + 6, layer);
+        for (int i = 0; i < 2; i++) {
+            layer = new ErosionMapLayer(seed + 3 + i, layer);
+        }
+        layer = new DeepOceanMapLayer(seed + 4, layer);
+        layer = new BiomeMapLayer(seed + 5, layer);
         for (int i = 0; i < 2; i++) {
             layer = new ZoomMapLayer(seed + 200 + i, layer);
         }
-        layer = new ShoreMapLayer(seed + 7, layer);
+        layer = new ZoomMapLayer(seed + 300, layer);
+        layer = new ErosionMapLayer(seed + 6, layer);
+        layer = new ZoomMapLayer(seed + 400, layer);
+        layer = new ShoreMapLayer(seed + 500, layer);
         for (int i = 0; i < 2; i++) {
-            layer = new ZoomMapLayer(seed + 300 + i, layer);
+            layer = new ZoomMapLayer(seed + 500 + i, layer);
         }
-        layer = new SmoothMapLayer(seed + 8, layer);
+        layer = new SmoothMapLayer(seed + 500, layer);
 
         int[] data = new int[WIDTH * HEIGHT];
         //Random random = new Random();

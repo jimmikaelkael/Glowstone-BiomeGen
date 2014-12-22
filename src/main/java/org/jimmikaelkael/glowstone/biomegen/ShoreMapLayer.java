@@ -29,7 +29,7 @@ public class ShoreMapLayer extends MapLayer {
         int[] finalValues = new int[sizeX * sizeZ];
         for (int i = 0; i < sizeZ; i++) {
             for (int j = 0; j < sizeX; j++) {
-                // This applies deep oceans using Von Neumann neighborhood
+                // This applies shores using Von Neumann neighborhood
                 // it takes a 3x3 grid with a cross shape and analyzes values as follow
                 // 0X0
                 // XxX
