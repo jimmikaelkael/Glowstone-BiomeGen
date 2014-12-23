@@ -17,6 +17,14 @@ public class WhittakerMapLayer extends MapLayer {
 
     @Override
     public int[] generateValues(int x, int z, int sizeX, int sizeZ) {
+        if (type == ClimateType.WARM_WET || type == ClimateType.COLD_DRY) {
+            return swapValues(x, z, sizeX, sizeZ);
+        } else {
+            return modifyValues(x, z, sizeX, sizeZ);
+        }
+    }
+
+    private int[] swapValues(int x, int z, int sizeX, int sizeZ) {
         int gridX = x - 1;
         int gridZ = z - 1;
         int gridSizeX = sizeX + 2;
@@ -46,9 +54,26 @@ public class WhittakerMapLayer extends MapLayer {
         return finalValues;
     }
 
+    private int[] modifyValues(int x, int z, int sizeX, int sizeZ) {
+        int[] values = belowLayer.generateValues(x, z, sizeX, sizeZ);
+        int[] finalValues = new int[sizeX * sizeZ];
+        for (int i = 0; i < sizeZ; i++) {
+            for (int j = 0; j < sizeX; j++) {
+                setCoordsSeed(x + j, z + i);
+                int val = values[j + i * sizeX];
+                if (val != 0 && nextInt(13) == 0) {
+                    val += 1000;
+                }
+                finalValues[j + i * sizeX] = val;
+            }
+        }
+        return finalValues;
+    }
+
     public static enum ClimateType {
         WARM_WET,
-        COLD_DRY
+        COLD_DRY,
+        LARGER_BIOMES
     }
 
     static {

@@ -13,6 +13,10 @@ public class BiomeMapLayer extends MapLayer {
             GlowBiome.getId(Biome.TAIGA), GlowBiome.getId(Biome.EXTREME_HILLS)};
     private static final int[] COLD = new int[] {GlowBiome.getId(Biome.ICE_PLAINS), GlowBiome.getId(Biome.ICE_PLAINS),
             GlowBiome.getId(Biome.COLD_TAIGA)};
+    private static final int[] WARM_LARGE = new int[] {GlowBiome.getId(Biome.MESA_PLATEAU_FOREST), GlowBiome.getId(Biome.MESA_PLATEAU_FOREST),
+            GlowBiome.getId(Biome.MESA_PLATEAU)};
+    private static final int[] DRY_LARGE = new int[] {GlowBiome.getId(Biome.MEGA_TAIGA)};
+    private static final int[] WET_LARGE = new int[] {GlowBiome.getId(Biome.JUNGLE)};
 
     private final MapLayer belowLayer;
 
@@ -38,10 +42,20 @@ public class BiomeMapLayer extends MapLayer {
                         finalValues[j + i * sizeX] = WARM[nextInt(WARM.length)];
                         break;
                     case 3:
+                    case 1003:
                         finalValues[j + i * sizeX] = COLD[nextInt(COLD.length)];
                         break;
                     case 4:
                         finalValues[j + i * sizeX] = WET[nextInt(WET.length)];
+                        break;
+                    case 1001:
+                        finalValues[j + i * sizeX] = DRY_LARGE[nextInt(DRY_LARGE.length)];
+                        break;
+                    case 1002:
+                        finalValues[j + i * sizeX] = WARM_LARGE[nextInt(WARM_LARGE.length)];
+                        break;
+                    case 1004:
+                        finalValues[j + i * sizeX] = WET_LARGE[nextInt(WET_LARGE.length)];
                         break;
                     default:
                         finalValues[j + i * sizeX] = val;

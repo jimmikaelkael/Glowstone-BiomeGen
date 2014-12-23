@@ -16,8 +16,22 @@ public class NoiseMapLayer extends MapLayer {
         int[] values = new int[sizeX * sizeZ]; 
         for (int i = 0; i < sizeZ; i++) {
             for (int j = 0; j < sizeX; j++) {
-                double noise = noiseGen.noise(x + j, z + i, 0.2D, 0.8D, true) * 4.0D;
-                values[j + i * sizeX] = noise >= -1D ? (double) noise >= 3 ? 1 : (double) noise >= 0.57D ? 3 : 2 : 0;
+                double noise = noiseGen.noise(x + j, z + i, 0.175D, 0.8D, true) * 4.0D;
+                int val = 0;
+                if (noise >= -0.4D) {
+                    if (noise >= 0.57D) {
+                        val = 2;
+                    } else if (noise <= 0.2D) {
+                        val = 3;
+                    } else {
+                        val = 2;
+                    }
+                } else {
+                    setCoordsSeed(x + j, z + i);
+                    val = nextInt(2) == 0 ? 3 : 0;
+                }
+                values[j + i * sizeX] = val;
+                //values[j + i * sizeX] = noise >= -0.5D ? (double) noise >= 0.57D ? 2 : noise <= 0.2D ? 3 : 2 : nextInt(2) == 0 ? 3 : 0;
             }
         }
         return values;

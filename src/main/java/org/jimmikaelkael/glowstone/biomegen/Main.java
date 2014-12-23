@@ -24,10 +24,11 @@ public class Main extends JComponent {
     private BufferedImage image;
 
     public void initialize() {
-        //seed = 123;
+        //seed = 12345;
         MapLayer layer = new NoiseMapLayer(seed); // this is initial land spread layer
         layer = new WhittakerMapLayer(seed + 1, layer, ClimateType.WARM_WET);
-        layer = new WhittakerMapLayer(seed + 2, layer, ClimateType.COLD_DRY);
+        layer = new WhittakerMapLayer(seed + 1, layer, ClimateType.COLD_DRY);
+        layer = new WhittakerMapLayer(seed + 2, layer, ClimateType.LARGER_BIOMES);
         for (int i = 0; i < 2; i++) {
             layer = new ZoomMapLayer(seed + 100 + i, layer, ZoomType.BLURRY);
         }
