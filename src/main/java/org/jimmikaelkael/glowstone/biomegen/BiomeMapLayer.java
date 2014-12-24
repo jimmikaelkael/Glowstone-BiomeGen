@@ -6,8 +6,9 @@ public class BiomeMapLayer extends MapLayer {
 
     private static final int[] WARM = new int[] {GlowBiome.getId(Biome.DESERT), GlowBiome.getId(Biome.DESERT),
             GlowBiome.getId(Biome.DESERT), GlowBiome.getId(Biome.SAVANNA), GlowBiome.getId(Biome.SAVANNA), GlowBiome.getId(Biome.PLAINS)};
-    private static final int[] WET = new int[] {GlowBiome.getId(Biome.PLAINS), GlowBiome.getId(Biome.FOREST),
-            GlowBiome.getId(Biome.BIRCH_FOREST), GlowBiome.getId(Biome.ROOFED_FOREST), GlowBiome.getId(Biome.EXTREME_HILLS),
+    private static final int[] WET = new int[] {GlowBiome.getId(Biome.PLAINS), GlowBiome.getId(Biome.PLAINS),
+            GlowBiome.getId(Biome.FOREST), GlowBiome.getId(Biome.FOREST), GlowBiome.getId(Biome.BIRCH_FOREST), GlowBiome.getId(Biome.BIRCH_FOREST),
+            GlowBiome.getId(Biome.ROOFED_FOREST), GlowBiome.getId(Biome.ROOFED_FOREST), GlowBiome.getId(Biome.EXTREME_HILLS), GlowBiome.getId(Biome.EXTREME_HILLS),
             GlowBiome.getId(Biome.SWAMPLAND)};
     private static final int[] DRY = new int[] {GlowBiome.getId(Biome.PLAINS), GlowBiome.getId(Biome.FOREST),
             GlowBiome.getId(Biome.TAIGA), GlowBiome.getId(Biome.EXTREME_HILLS)};

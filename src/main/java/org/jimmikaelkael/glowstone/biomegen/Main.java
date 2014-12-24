@@ -36,16 +36,24 @@ public class Main extends JComponent {
             layer = new ErosionMapLayer(seed + 3 + i, layer);
         }
         layer = new DeepOceanMapLayer(seed + 4, layer);
+
+        MapLayer layerElevation = new ElevationMapLayer(1000, layer);
+        MapLayer layerMountains = layerElevation;
+        for (int i = 0; i < 2; i++) {
+            layerMountains = new ZoomMapLayer(seed + 200 + i, layerMountains);
+        }
+
         layer = new BiomeMapLayer(seed + 5, layer);
         for (int i = 0; i < 2; i++) {
             layer = new ZoomMapLayer(seed + 200 + i, layer);
         }
+        layer = new MountainsMapLayer(seed + 200, layer, layerMountains);
         layer = new ZoomMapLayer(seed + 300, layer);
         layer = new ErosionMapLayer(seed + 6, layer);
         layer = new ZoomMapLayer(seed + 400, layer);
         layer = new ShoreMapLayer(seed + 500, layer);
         for (int i = 0; i < 2; i++) {
-            layer = new ZoomMapLayer(seed + 500 + i, layer);
+            //layer = new ZoomMapLayer(seed + 500 + i, layer);
         }
         layer = new SmoothMapLayer(seed + 500, layer);
 

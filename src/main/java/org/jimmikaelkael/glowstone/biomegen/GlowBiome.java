@@ -15,7 +15,21 @@ public class GlowBiome {
         return ids[biome.ordinal()];
     }
 
+    public static Biome fromId(int id) {
+        if (id < 0 || id > 255) {
+            //throw new IllegalArgumentException();
+            return null;
+        }
+        if (biomes[id] != null) {
+            return biomes[id];
+        }
+        return null;
+    }
+
     public static int getColor(int id) {
+        if (id > 255) {
+            return 0;
+        }
         return colors[id];
     }
 
