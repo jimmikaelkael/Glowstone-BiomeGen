@@ -11,12 +11,12 @@ public class MountainsMapLayer extends MapLayer {
     private static final Map<Integer, int[]> map = new HashMap<Integer, int[]>();
 
     private final MapLayer belowLayer;
-    private final MapLayer elevationLayer;
+    private final MapLayer variationLayer;
 
-    public MountainsMapLayer(long seed, MapLayer belowLayer, MapLayer mountainsLayer) {
+    public MountainsMapLayer(long seed, MapLayer belowLayer, MapLayer variationLayer) {
         super(seed);
         this.belowLayer = belowLayer;
-        this.elevationLayer = mountainsLayer;
+        this.variationLayer = variationLayer;
     }
 
     @Override
@@ -27,24 +27,24 @@ public class MountainsMapLayer extends MapLayer {
         int gridSizeZ = sizeZ + 2;
 
         int[] values = belowLayer.generateValues(gridX, gridZ, gridSizeX, gridSizeZ);
-        int[] eValues = elevationLayer.generateValues(gridX, gridZ, gridSizeX, gridSizeZ);
+        int[] eValues = variationLayer.generateValues(gridX, gridZ, gridSizeX, gridSizeZ);
 
         int[] finalValues = new int[sizeX * sizeZ];
         for (int i = 0; i < sizeZ; i++) {
             for (int j = 0; j < sizeX; j++) {
                 setCoordsSeed(x + j, z + i);
                 int centerValue = values[j + 1 + (i + 1) * gridSizeX];
-                int elevationValue = eValues[j + 1 + (i + 1) * gridSizeX];
-                if (centerValue != 0 && elevationValue == 3 && centerValue < 128) {
+                int variationValue = eValues[j + 1 + (i + 1) * gridSizeX];
+                if (centerValue != 0 && variationValue == 3 && centerValue < 128) {
                     finalValues[j + i * sizeX] = GlowBiome.fromId(centerValue + 128) != null ? centerValue + 128 : centerValue;
-                } else if (elevationValue == 2 || nextInt(3) == 0) {
+                } else if (variationValue == 2 || nextInt(3) == 0) {
                     int val = centerValue;
                     if (map.containsKey(centerValue)) {
                         val = map.get(centerValue)[nextInt(map.get(centerValue).length)];
                     } else if (centerValue == GlowBiome.getId(Biome.DEEP_OCEAN) && nextInt(3) == 0) {
                         val = ISLANDS[nextInt(ISLANDS.length)];
                     }
-                    if (elevationValue == 2 && val != centerValue) {
+                    if (variationValue == 2 && val != centerValue) {
                         val = GlowBiome.fromId(val + 128) != null ? val + 128 : centerValue;
                     }
                     if (val != centerValue) {
@@ -88,7 +88,7 @@ public class MountainsMapLayer extends MapLayer {
         map.put(GlowBiome.getId(Biome.OCEAN), new int[] {GlowBiome.getId(Biome.DEEP_OCEAN)});
         map.put(GlowBiome.getId(Biome.EXTREME_HILLS), new int[] {GlowBiome.getId(Biome.EXTREME_HILLS_PLUS)});
         map.put(GlowBiome.getId(Biome.SAVANNA), new int[] {GlowBiome.getId(Biome.SAVANNA_PLATEAU)});
-        //map.put(GlowBiome.getId(Biome.MESA_PLATEAU_FOREST), new int[] {GlowBiome.getId(Biome.MESA_PLATEAU_FOREST_MOUNTAINS)});
-        //map.put(GlowBiome.getId(Biome.MESA_PLATEAU), new int[] {GlowBiome.getId(Biome.MESA_PLATEAU_MOUNTAINS)});
+        map.put(GlowBiome.getId(Biome.MESA_PLATEAU_FOREST), new int[] {GlowBiome.getId(Biome.MESA)});
+        map.put(GlowBiome.getId(Biome.MESA_PLATEAU), new int[] {GlowBiome.getId(Biome.MESA)});
     }
 }

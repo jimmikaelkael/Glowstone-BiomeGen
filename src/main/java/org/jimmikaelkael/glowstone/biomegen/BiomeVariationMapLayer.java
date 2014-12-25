@@ -1,10 +1,10 @@
 package org.jimmikaelkael.glowstone.biomegen;
 
-public class ElevationMapLayer extends MapLayer {
+public class BiomeVariationMapLayer extends MapLayer {
 
     private final MapLayer belowLayer;
 
-    public ElevationMapLayer(long seed, MapLayer belowLayer) {
+    public BiomeVariationMapLayer(long seed, MapLayer belowLayer) {
         super(seed);
         this.belowLayer = belowLayer;
     }

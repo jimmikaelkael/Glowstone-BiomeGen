@@ -27,7 +27,7 @@ public class GlowBiome {
     }
 
     public static int getColor(int id) {
-        if (id > 255) {
+        if (id < 0 || id > 255) {
             return 0;
         }
         return colors[id];
