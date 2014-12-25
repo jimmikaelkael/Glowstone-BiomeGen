@@ -48,6 +48,7 @@ public class Main extends JComponent {
             layer = new ZoomMapLayer(seed + 200 + i, layer);
         }
         layer = new MountainsMapLayer(seed + 200, layer, layerMountains);
+        layer = new RarePlainsMapLayer(seed + 201, layer);
         layer = new ZoomMapLayer(seed + 300, layer);
         layer = new ErosionMapLayer(seed + 6, layer);
         layer = new ZoomMapLayer(seed + 400, layer);
