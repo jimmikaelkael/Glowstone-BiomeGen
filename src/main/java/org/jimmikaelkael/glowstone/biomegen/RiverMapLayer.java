@@ -92,7 +92,7 @@ public class RiverMapLayer extends MapLayer {
         OCEANS.add(GlowBiome.getId(Biome.DEEP_OCEAN));
 
         SPECIAL_RIVERS.put(GlowBiome.getId(Biome.ICE_PLAINS), GlowBiome.getId(Biome.FROZEN_RIVER));
-        SPECIAL_RIVERS.put(GlowBiome.getId(Biome.MUSHROOM_ISLAND), GlowBiome.getId(Biome.MUSHROOM_ISLAND));
+        SPECIAL_RIVERS.put(GlowBiome.getId(Biome.MUSHROOM_ISLAND), GlowBiome.getId(Biome.MUSHROOM_SHORE));
         SPECIAL_RIVERS.put(GlowBiome.getId(Biome.MUSHROOM_SHORE), GlowBiome.getId(Biome.MUSHROOM_SHORE));
     }
 }

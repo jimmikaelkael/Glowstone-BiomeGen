@@ -15,6 +15,7 @@ import org.jimmikaelkael.glowstone.biomegen.ZoomMapLayer.ZoomType;
 public class Main extends JComponent {
 
     private static final long serialVersionUID = 4128619461630366918L;
+    private static final int ZOOM = 2;
     private static final int CHUNK_SIZE = 16;
     private static final int CHUNK_WIDTH = 110;
     private static final int CHUNK_HEIGHT = 60;
@@ -37,30 +38,31 @@ public class Main extends JComponent {
         }
         layer = new DeepOceanMapLayer(seed + 4, layer);
 
-        MapLayer layerVariation = new BiomeVariationMapLayer(seed + 1000, layer);
+        MapLayer layerVariation = new BiomeVariationMapLayer(seed + 200, layer);
         MapLayer layerMountains = layerVariation;
         for (int i = 0; i < 2; i++) {
             layerMountains = new ZoomMapLayer(seed + 200 + i, layerMountains);
         }
 
         layer = new BiomeMapLayer(seed + 5, layer);
-        for (int i = 0; i < 2; i++) {
-            layer = new ZoomMapLayer(seed + 200 + i, layer);
-        }
-        layer = new MountainsMapLayer(seed + 200, layer, layerMountains);
+        layer = new ZoomMapLayer(seed + 200, layer);
+        // Biome Edges (large)
+        layer = new ZoomMapLayer(seed + 201, layer);
+        layer = new BiomeVariationMapLayer(seed + 200, layer, layerMountains);
         layer = new RarePlainsMapLayer(seed + 201, layer);
         layer = new ZoomMapLayer(seed + 300, layer);
         layer = new ErosionMapLayer(seed + 6, layer);
         layer = new ZoomMapLayer(seed + 400, layer);
+        // Biome Edges (thin)
         layer = new ShoreMapLayer(seed + 7, layer);
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < ZOOM; i++) {
             layer = new ZoomMapLayer(seed + 500 + i, layer);
         }
 
         MapLayer layerRiver = layerMountains;
         layerRiver = new ZoomMapLayer(seed + 300, layerRiver);
         layerRiver = new ZoomMapLayer(seed + 400, layerRiver);
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < ZOOM; i++) {
             layerRiver = new ZoomMapLayer(seed + 500 + i, layerRiver);
         }
         layerRiver = new RiverMapLayer(seed + 10, layerRiver);
