@@ -46,11 +46,11 @@ public class RiverMapLayer extends MapLayer {
         for (int i = 0; i < sizeZ; i++) {
             for (int j = 0; j < sizeX; j++) {
                 // This applies rivers using Von Neumann neighborhood
-                int centerVal = getCellValue(values[j + 1 + (i + 1) * gridSizeX]);
-                int upperVal = getCellValue(values[j + 1 + i * gridSizeX]);
-                int lowerVal = getCellValue(values[j + 1 + (i + 2) * gridSizeX]);
-                int leftVal = getCellValue(values[j + (i + 1) * gridSizeX]);
-                int rightVal = getCellValue(values[j + 2 + (i + 1) * gridSizeX]);
+                int centerVal = values[j + 1 + (i + 1) * gridSizeX] & 1;
+                int upperVal = values[j + 1 + i * gridSizeX] & 1;
+                int lowerVal = values[j + 1 + (i + 2) * gridSizeX] & 1;
+                int leftVal = values[j + (i + 1) * gridSizeX] & 1;
+                int rightVal = values[j + 2 + (i + 1) * gridSizeX] & 1;
                 int val = CLEAR_VALUE;
                 if (centerVal != upperVal || centerVal != lowerVal || centerVal != leftVal || centerVal != rightVal) {
                     val = RIVER_VALUE;
@@ -81,10 +81,6 @@ public class RiverMapLayer extends MapLayer {
         }
 
         return finalValues;
-    }
-
-    private int getCellValue(int value) {
-        return value == 0 ? value : value & 1 + 2;
     }
 
     static {
