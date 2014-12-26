@@ -45,9 +45,10 @@ public class Main extends JComponent {
         }
 
         layer = new BiomeMapLayer(seed + 5, layer);
-        layer = new ZoomMapLayer(seed + 200, layer);
-        // Biome Edges (large)
-        layer = new ZoomMapLayer(seed + 201, layer);
+        for (int i = 0; i < 2; i++) {
+            layer = new ZoomMapLayer(seed + 200 + i, layer);
+        }
+        layer = new BiomeEdgeMapLayer(seed + 200, layer);
         layer = new BiomeVariationMapLayer(seed + 200, layer, layerMountains);
         layer = new RarePlainsMapLayer(seed + 201, layer);
         layer = new ZoomMapLayer(seed + 300, layer);
