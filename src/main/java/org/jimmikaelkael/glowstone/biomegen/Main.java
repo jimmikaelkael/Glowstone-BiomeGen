@@ -1,6 +1,8 @@
 package org.jimmikaelkael.glowstone.biomegen;
 
 import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
@@ -23,9 +25,11 @@ public class Main extends JComponent {
     private static final int HEIGHT = CHUNK_SIZE * CHUNK_HEIGHT;
     private static long seed;   
     private BufferedImage image;
+    private int[] biomeData = new int[WIDTH * HEIGHT];
 
     public void initialize() {
-        //seed = 12345;
+        setToolTipText("X: -, Z: -");
+
         MapLayer layer = new NoiseMapLayer(seed); // this is initial land spread layer
         layer = new WhittakerMapLayer(seed + 1, layer, ClimateType.WARM_WET);
         layer = new WhittakerMapLayer(seed + 1, layer, ClimateType.COLD_DRY);
@@ -54,7 +58,7 @@ public class Main extends JComponent {
         layer = new ZoomMapLayer(seed + 300, layer);
         layer = new ErosionMapLayer(seed + 6, layer);
         layer = new ZoomMapLayer(seed + 400, layer);
-        // Biome Edges (thin)
+        layer = new BiomeThinEdgeMapLayer(seed + 400, layer);
         layer = new ShoreMapLayer(seed + 7, layer);
         for (int i = 0; i < ZOOM; i++) {
             layer = new ZoomMapLayer(seed + 500 + i, layer);
@@ -81,6 +85,8 @@ public class Main extends JComponent {
                     for (int z = 0; z < CHUNK_SIZE; z++) {
                         data[x + (CHUNK_SIZE * i) + (j * CHUNK_SIZE * CHUNK_WIDTH * CHUNK_SIZE)
                                 + (z * CHUNK_SIZE * CHUNK_WIDTH)] = GlowBiome.getColor(ints[z * CHUNK_SIZE + x]);
+                        biomeData[x + (CHUNK_SIZE * i) + (j * CHUNK_SIZE * CHUNK_WIDTH * CHUNK_SIZE)
+                             + (z * CHUNK_SIZE * CHUNK_WIDTH)] = ints[z * CHUNK_SIZE + x];
                     }
                 }
             }
@@ -90,15 +96,25 @@ public class Main extends JComponent {
         image.setRGB(0, 0, WIDTH, HEIGHT, data, 0, WIDTH);
     }
 
+    @Override
     public void paint(Graphics g) {
         if (image == null)
             initialize();
         g.drawImage(image, 0, 0, this);
     }
 
+    @Override
+    public Point getToolTipLocation(MouseEvent e) {
+        setToolTipText("X: " + (e.getPoint().x - WIDTH / 2) + ", Z: " + (e.getPoint().y - HEIGHT / 2) + " Biome: " + GlowBiome.fromId(biomeData[e.getPoint().x + e.getPoint().y * WIDTH]).name());
+        //return new Point(e.getPoint().x + 20, e.getPoint().y);
+        return new Point(10, 10);
+    }
+
     public static void main(String[] args) {
         Random random = new Random();
         seed = random.nextLong();
+        seed = -6243259992073630573L;
+
         JFrame f = new JFrame("Seed: " + seed);
         f.getContentPane().add(new Main());
         f.setSize(WIDTH, HEIGHT);

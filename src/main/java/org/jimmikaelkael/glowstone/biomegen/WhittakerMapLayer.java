@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class WhittakerMapLayer extends MapLayer {
 
-    private static final Map<ClimateType, Climate> map = new HashMap<ClimateType, Climate>();
+    private static final Map<ClimateType, Climate> MAP = new HashMap<ClimateType, Climate>();
     private final MapLayer belowLayer;
     private final ClimateType type;
 
@@ -31,7 +31,7 @@ public class WhittakerMapLayer extends MapLayer {
         int gridSizeZ = sizeZ + 2;
         int[] values = belowLayer.generateValues(gridX, gridZ, gridSizeX, gridSizeZ);
 
-        final Climate climate = map.get(type);
+        final Climate climate = MAP.get(type);
         int[] finalValues = new int[sizeX * sizeZ];
         for (int i = 0; i < sizeZ; i++) {
             for (int j = 0; j < sizeX; j++) {
@@ -59,10 +59,12 @@ public class WhittakerMapLayer extends MapLayer {
         int[] finalValues = new int[sizeX * sizeZ];
         for (int i = 0; i < sizeZ; i++) {
             for (int j = 0; j < sizeX; j++) {
-                setCoordsSeed(x + j, z + i);
                 int val = values[j + i * sizeX];
-                if (val != 0 && nextInt(13) == 0) {
-                    val += 1000;
+                if (val != 0) {
+                    setCoordsSeed(x + j, z + i);
+                    if (nextInt(13) == 0) {
+                        val += 1000;
+                    }
                 }
                 finalValues[j + i * sizeX] = val;
             }
@@ -77,8 +79,8 @@ public class WhittakerMapLayer extends MapLayer {
     }
 
     static {
-        map.put(ClimateType.WARM_WET, new Climate(2, new int[] {3, 1}, 4));
-        map.put(ClimateType.COLD_DRY, new Climate(3, new int[] {2, 4}, 1));
+        MAP.put(ClimateType.WARM_WET, new Climate(2, new int[] {3, 1}, 4));
+        MAP.put(ClimateType.COLD_DRY, new Climate(3, new int[] {2, 4}, 1));
     }
 
     private static class Climate {

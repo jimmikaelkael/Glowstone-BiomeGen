@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.bukkit.block.Biome;
+import static org.bukkit.block.Biome.*;
 
 public class RiverMapLayer extends MapLayer {
 
@@ -74,7 +74,7 @@ public class RiverMapLayer extends MapLayer {
                 if (SPECIAL_RIVERS.containsKey(mValues[i])) {
                     val = SPECIAL_RIVERS.get(mValues[i]);
                 } else {
-                    val = GlowBiome.getId(Biome.RIVER);
+                    val = GlowBiome.getId(RIVER);
                 }
             }
             finalValues[i] = val;
@@ -84,11 +84,11 @@ public class RiverMapLayer extends MapLayer {
     }
 
     static {
-        OCEANS.add(GlowBiome.getId(Biome.OCEAN));
-        OCEANS.add(GlowBiome.getId(Biome.DEEP_OCEAN));
+        OCEANS.add(GlowBiome.getId(OCEAN));
+        OCEANS.add(GlowBiome.getId(DEEP_OCEAN));
 
-        SPECIAL_RIVERS.put(GlowBiome.getId(Biome.ICE_PLAINS), GlowBiome.getId(Biome.FROZEN_RIVER));
-        SPECIAL_RIVERS.put(GlowBiome.getId(Biome.MUSHROOM_ISLAND), GlowBiome.getId(Biome.MUSHROOM_SHORE));
-        SPECIAL_RIVERS.put(GlowBiome.getId(Biome.MUSHROOM_SHORE), GlowBiome.getId(Biome.MUSHROOM_SHORE));
+        SPECIAL_RIVERS.put(GlowBiome.getId(ICE_PLAINS), GlowBiome.getId(FROZEN_RIVER));
+        SPECIAL_RIVERS.put(GlowBiome.getId(MUSHROOM_ISLAND), GlowBiome.getId(MUSHROOM_SHORE));
+        SPECIAL_RIVERS.put(GlowBiome.getId(MUSHROOM_SHORE), GlowBiome.getId(MUSHROOM_SHORE));
     }
 }

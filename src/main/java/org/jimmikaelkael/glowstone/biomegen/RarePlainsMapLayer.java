@@ -3,7 +3,7 @@ package org.jimmikaelkael.glowstone.biomegen;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.bukkit.block.Biome;
+import static org.bukkit.block.Biome.*;
 
 public class RarePlainsMapLayer extends MapLayer {
 
@@ -40,6 +40,6 @@ public class RarePlainsMapLayer extends MapLayer {
     }
 
     static {
-        RARE_PLAINS.put(GlowBiome.getId(Biome.PLAINS), GlowBiome.getId(Biome.SUNFLOWER_PLAINS));
+        RARE_PLAINS.put(GlowBiome.getId(PLAINS), GlowBiome.getId(SUNFLOWER_PLAINS));
     }
 }

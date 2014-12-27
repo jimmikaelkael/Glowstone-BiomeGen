@@ -1,10 +1,12 @@
 package org.jimmikaelkael.glowstone.biomegen;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.bukkit.block.Biome;
+import static org.bukkit.block.Biome.*;
 
 public class BiomeEdgeMapLayer extends MapLayer {
 
@@ -13,7 +15,7 @@ public class BiomeEdgeMapLayer extends MapLayer {
     private static final Map<Integer, Integer> DESERT_EDGES = new HashMap<Integer, Integer>();
     private static final Map<Integer, Integer> SWAMP1_EDGES = new HashMap<Integer, Integer>();
     private static final Map<Integer, Integer> SWAMP2_EDGES = new HashMap<Integer, Integer>();
-    private static final Map<Map<Integer, Integer>, Integer[]> EDGES = new HashMap<Map<Integer, Integer>, Integer[]>();
+    private static final Map<Map<Integer, Integer>, List<Integer>> EDGES = new HashMap<Map<Integer, Integer>, List<Integer>>();
 
     private final MapLayer belowLayer;
 
@@ -36,7 +38,7 @@ public class BiomeEdgeMapLayer extends MapLayer {
                 // This applies biome large edges using Von Neumann neighborhood
                 int centerVal = values[j + 1 + (i + 1) * gridSizeX];
                 int val = centerVal;
-                for (Entry<Map<Integer, Integer>, Integer[]> entry : EDGES.entrySet()) {
+                for (Entry<Map<Integer, Integer>, List<Integer>> entry : EDGES.entrySet()) {
                     final Map<Integer, Integer> map = entry.getKey();
                     if (map.containsKey(centerVal)) {
                         int upperVal = values[j + 1 + i * gridSizeX];
@@ -47,16 +49,10 @@ public class BiomeEdgeMapLayer extends MapLayer {
                                 !map.containsKey(leftVal) || !map.containsKey(rightVal))) {
                             val = map.get(centerVal);
                             break;
-                        } else if (entry.getValue() != null) {
-                            for (int v : entry.getValue()) {
-                                if (v == upperVal || v == lowerVal || v == leftVal || v == rightVal) {
-                                    val = map.get(centerVal);
-                                    break;
-                                }
-                            }
-                            if (val != centerVal) {
-                                break;
-                            }
+                        } else if (entry.getValue() != null && (entry.getValue().contains(upperVal) || entry.getValue().contains(lowerVal) ||
+                                entry.getValue().contains(leftVal) || entry.getValue().contains(rightVal))) {
+                            val = map.get(centerVal);
+                            break;
                         }
                     }
                 }
@@ -68,20 +64,20 @@ public class BiomeEdgeMapLayer extends MapLayer {
     }
 
     static {
-        MESA_EDGES.put(GlowBiome.getId(Biome.MESA_PLATEAU_FOREST), GlowBiome.getId(Biome.MESA));
-        MESA_EDGES.put(GlowBiome.getId(Biome.MESA_PLATEAU), GlowBiome.getId(Biome.MESA));
+        MESA_EDGES.put(GlowBiome.getId(MESA_PLATEAU_FOREST), GlowBiome.getId(MESA));
+        MESA_EDGES.put(GlowBiome.getId(MESA_PLATEAU), GlowBiome.getId(MESA));
 
-        MEGA_TAIGA_EDGES.put(GlowBiome.getId(Biome.MEGA_TAIGA), GlowBiome.getId(Biome.TAIGA));
+        MEGA_TAIGA_EDGES.put(GlowBiome.getId(MEGA_TAIGA), GlowBiome.getId(TAIGA));
 
-        DESERT_EDGES.put(GlowBiome.getId(Biome.DESERT), GlowBiome.getId(Biome.EXTREME_HILLS_PLUS));
+        DESERT_EDGES.put(GlowBiome.getId(DESERT), GlowBiome.getId(EXTREME_HILLS_PLUS));
 
-        SWAMP1_EDGES.put(GlowBiome.getId(Biome.SWAMPLAND), GlowBiome.getId(Biome.PLAINS));
-        SWAMP2_EDGES.put(GlowBiome.getId(Biome.SWAMPLAND), GlowBiome.getId(Biome.JUNGLE_EDGE));
+        SWAMP1_EDGES.put(GlowBiome.getId(SWAMPLAND), GlowBiome.getId(PLAINS));
+        SWAMP2_EDGES.put(GlowBiome.getId(SWAMPLAND), GlowBiome.getId(JUNGLE_EDGE));
 
         EDGES.put(MESA_EDGES, null);
         EDGES.put(MEGA_TAIGA_EDGES, null);
-        EDGES.put(DESERT_EDGES, new Integer[] {GlowBiome.getId(Biome.ICE_PLAINS)});
-        EDGES.put(SWAMP1_EDGES, new Integer[] {GlowBiome.getId(Biome.DESERT), GlowBiome.getId(Biome.COLD_TAIGA), GlowBiome.getId(Biome.ICE_PLAINS)});
-        EDGES.put(SWAMP2_EDGES, new Integer[] {GlowBiome.getId(Biome.JUNGLE)});
+        EDGES.put(DESERT_EDGES, Arrays.asList(GlowBiome.getId(ICE_PLAINS)));
+        EDGES.put(SWAMP1_EDGES, Arrays.asList(GlowBiome.getId(DESERT), GlowBiome.getId(COLD_TAIGA), GlowBiome.getId(ICE_PLAINS)));
+        EDGES.put(SWAMP2_EDGES, Arrays.asList(GlowBiome.getId(JUNGLE)));
     }
 }

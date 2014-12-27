@@ -1,6 +1,6 @@
 package org.jimmikaelkael.glowstone.biomegen;
 
-import org.bukkit.block.Biome;
+import static org.bukkit.block.Biome.*;
 
 public class DeepOceanMapLayer extends MapLayer {
 
@@ -37,7 +37,7 @@ public class DeepOceanMapLayer extends MapLayer {
                     int rightVal = values[j + 2 + (i + 1) * gridSizeX];
                     if (upperVal == 0 && lowerVal == 0 && leftVal == 0 && rightVal == 0) {
                         setCoordsSeed(x + j, z + i);
-                        finalValues[j + i * sizeX] = nextInt(100) == 0 ? GlowBiome.getId(Biome.MUSHROOM_ISLAND) : GlowBiome.getId(Biome.DEEP_OCEAN);
+                        finalValues[j + i * sizeX] = nextInt(100) == 0 ? GlowBiome.getId(MUSHROOM_ISLAND) : GlowBiome.getId(DEEP_OCEAN);
                     } else {
                         finalValues[j + i * sizeX] = centerVal;
                     }
