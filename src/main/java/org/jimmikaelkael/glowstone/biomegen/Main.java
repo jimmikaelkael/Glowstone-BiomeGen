@@ -113,7 +113,7 @@ public class Main extends JComponent {
     public static void main(String[] args) {
         Random random = new Random();
         seed = random.nextLong();
-        seed = -6243259992073630573L;
+        //seed = -6243259992073630573L;
 
         JFrame f = new JFrame("Seed: " + seed);
         f.getContentPane().add(new Main());
