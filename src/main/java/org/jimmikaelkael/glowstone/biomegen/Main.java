@@ -11,13 +11,11 @@ import java.util.Random;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 
-import org.jimmikaelkael.glowstone.biomegen.WhittakerMapLayer.ClimateType;
-import org.jimmikaelkael.glowstone.biomegen.ZoomMapLayer.ZoomType;
+import org.bukkit.WorldType;
 
 public class Main extends JComponent {
 
     private static final long serialVersionUID = 4128619461630366918L;
-    private static final int ZOOM = 2;
     private static final int CHUNK_SIZE = 16;
     private static final int CHUNK_WIDTH = 110;
     private static final int CHUNK_HEIGHT = 60;
@@ -30,57 +28,12 @@ public class Main extends JComponent {
     public void initialize() {
         setToolTipText("X: -, Z: -");
 
-        MapLayer layer = new NoiseMapLayer(seed); // this is initial land spread layer
-        layer = new WhittakerMapLayer(seed + 1, layer, ClimateType.WARM_WET);
-        layer = new WhittakerMapLayer(seed + 1, layer, ClimateType.COLD_DRY);
-        layer = new WhittakerMapLayer(seed + 2, layer, ClimateType.LARGER_BIOMES);
-        for (int i = 0; i < 2; i++) {
-            layer = new ZoomMapLayer(seed + 100 + i, layer, ZoomType.BLURRY);
-        }
-        for (int i = 0; i < 2; i++) {
-            layer = new ErosionMapLayer(seed + 3 + i, layer);
-        }
-        layer = new DeepOceanMapLayer(seed + 4, layer);
-
-        MapLayer layerVariation = new BiomeVariationMapLayer(seed + 200, layer);
-        MapLayer layerMountains = layerVariation;
-        for (int i = 0; i < 2; i++) {
-            layerMountains = new ZoomMapLayer(seed + 200 + i, layerMountains);
-        }
-
-        layer = new BiomeMapLayer(seed + 5, layer);
-        for (int i = 0; i < 2; i++) {
-            layer = new ZoomMapLayer(seed + 200 + i, layer);
-        }
-        layer = new BiomeEdgeMapLayer(seed + 200, layer);
-        layer = new BiomeVariationMapLayer(seed + 200, layer, layerMountains);
-        layer = new RarePlainsMapLayer(seed + 201, layer);
-        layer = new ZoomMapLayer(seed + 300, layer);
-        layer = new ErosionMapLayer(seed + 6, layer);
-        layer = new ZoomMapLayer(seed + 400, layer);
-        layer = new BiomeThinEdgeMapLayer(seed + 400, layer);
-        layer = new ShoreMapLayer(seed + 7, layer);
-        for (int i = 0; i < ZOOM; i++) {
-            layer = new ZoomMapLayer(seed + 500 + i, layer);
-        }
-
-        MapLayer layerRiver = layerMountains;
-        layerRiver = new ZoomMapLayer(seed + 300, layerRiver);
-        layerRiver = new ZoomMapLayer(seed + 400, layerRiver);
-        for (int i = 0; i < ZOOM; i++) {
-            layerRiver = new ZoomMapLayer(seed + 500 + i, layerRiver);
-        }
-        layerRiver = new RiverMapLayer(seed + 10, layerRiver);
-        layer = new RiverMapLayer(seed + 1000, layerRiver, layer);
-
-        layer = new SmoothMapLayer(seed + 10000, layer);
+        MapLayer biomeMap = MapLayer.initialize(seed, WorldType.NORMAL);
 
         int[] data = new int[WIDTH * HEIGHT];
-        //Random random = new Random();
         for (int i = 0; i < CHUNK_WIDTH; i++) {
             for (int j = 0; j < CHUNK_HEIGHT; j++) {
-                int[] ints = layer.generateValues(i * CHUNK_SIZE, j * CHUNK_SIZE, CHUNK_SIZE, CHUNK_SIZE);
-                //Color c = new Color(random.nextInt(256), random.nextInt(256), random.nextInt(256));
+                int[] ints = biomeMap.generateValues(i * CHUNK_SIZE, j * CHUNK_SIZE, CHUNK_SIZE, CHUNK_SIZE);
                 for (int x = 0; x < CHUNK_SIZE; x++) {
                     for (int z = 0; z < CHUNK_SIZE; z++) {
                         data[x + (CHUNK_SIZE * i) + (j * CHUNK_SIZE * CHUNK_WIDTH * CHUNK_SIZE)
